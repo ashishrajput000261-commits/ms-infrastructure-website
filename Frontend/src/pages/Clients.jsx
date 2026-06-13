@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiCheckSquare, FiShieldAlert } from 'react-icons/fi';
+import { FiCheckSquare, FiShield } from 'react-icons/fi';
 
 const clientLogos = [
   { name: 'QuantumTel Inc.', sector: 'Mobile Carrier Ops' },
@@ -34,7 +34,7 @@ const Clients = () => {
 
         {/* SLA Callout banner */}
         <div className="p-8 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 max-w-3xl mx-auto flex gap-4 items-start">
-          <FiShieldAlert className="text-3xl text-cyan-400 shrink-0 mt-1" />
+          <FiShield className="text-3xl text-cyan-400 shrink-0 mt-1" />
           <div>
             <h4 className="text-base font-bold text-white uppercase tracking-wide mb-1">Guaranteed Master SLA Alignment</h4>
             <p className="text-slate-400 text-xs font-medium leading-relaxed">
