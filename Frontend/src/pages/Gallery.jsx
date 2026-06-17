@@ -1,43 +1,230 @@
-import React from 'react';
+import React from "react";
+import {
+  FiArrowRight,
+  FiCamera,
+  FiRadio,
+  FiWifi,
+  FiTool,
+  FiMapPin,
+  FiServer,
+  FiUsers,
+} from "react-icons/fi";
 
-const assetPhotos = [
-  { label: '5G Cell Base Architecture' },
-  { label: 'Fiber Splicer Core Deployment' },
-  { label: 'Server Matrix Control Array' },
-  { label: 'Hyperscale Climate Array Setup' },
-  { label: 'High-Strand Optical Trunk Layer' },
-  { label: 'Substation Microwave System Node' },
+const categories = [
+  { icon: <FiRadio />, title: "Telecom Towers" },
+  { icon: <FiWifi />, title: "Fiber Networks" },
+  { icon: <FiMapPin />, title: "Site Surveys" },
+  { icon: <FiTool />, title: "Network Maintenance" },
+  { icon: <FiServer />, title: "Smart Infrastructure" },
+  { icon: <FiUsers />, title: "Team Operations" },
+];
+
+const galleryItems = [
+  "Tower Installation Work",
+  "Fiber Route Survey",
+  "OFC Laying Activity",
+  "Network Testing Setup",
+  "Telecom Site Inspection",
+  "Field Team Operations",
+  "Smart Infrastructure Setup",
+  "Power Backup Installation",
+  "Fiber Splicing Work",
+  "Maintenance Visit",
+  "Site Safety Check",
+  "Project Coordination",
+];
+
+const stats = [
+  { value: "50+", label: "Projects" },
+  { value: "100+", label: "Sites" },
+  { value: "500+", label: "KM Fiber" },
+  { value: "24/7", label: "Support" },
 ];
 
 const Gallery = () => {
   return (
-    <div className="bg-slate-950 text-white min-h-screen pt-32 pb-24 select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="mb-16">
-          <h1 className="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-4">Visual Documentation</h1>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">Physical Asset Archives</h2>
-        </div>
+    <main className="bg-slate-950 text-white">
+      {/* Hero */}
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-6 pt-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950"></div>
+        <div className="absolute top-24 left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"></div>
 
-        {/* Gallery Dynamic Placeholder Matrix */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {assetPhotos.map((img, i) => (
-            <div 
-              key={i} 
-              className="relative aspect-video rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden flex items-end p-6 group cursor-pointer"
-            >
-              <div className="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/10 transition-colors" />
-              <div className="relative z-10">
-                <span className="text-xs font-mono font-bold tracking-widest text-cyan-400">IMG-00{i+1}</span>
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mt-1">{img.label}</h4>
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
+          <p className="text-cyan-400 uppercase tracking-[0.35em] text-sm mb-5">
+            Project Gallery
+          </p>
+
+          <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
+            Showcasing Our
+            <span className="block text-cyan-400">Infrastructure Work</span>
+          </h1>
+
+          <p className="max-w-3xl mx-auto text-slate-300 text-lg leading-relaxed">
+            Explore our telecom, fiber, tower, site survey, maintenance, and
+            field operation work through a professional project gallery.
+          </p>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="py-24 px-6 bg-slate-900">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
+              Gallery Categories
+            </p>
+            <h2 className="text-3xl md:text-5xl font-black">
+              Infrastructure Work Areas
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((item, index) => (
+              <div
+                key={index}
+                className="group bg-slate-950 border border-slate-800 rounded-3xl p-8 hover:border-cyan-400/60 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mb-6 group-hover:bg-cyan-400 group-hover:text-slate-950 transition">
+                  {item.icon}
+                </div>
+
+                <h3 className="text-2xl font-bold">{item.title}</h3>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Grid */}
+      <section className="py-24 px-6 bg-slate-950">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16">
+            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
+              Visual Showcase
+            </p>
+            <h2 className="text-3xl md:text-5xl font-black">
+              Project Image Gallery
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {galleryItems.map((item, index) => (
+              <div
+                key={index}
+                className="group relative aspect-video overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 to-cyan-950 hover:border-cyan-400/60 transition"
+              >
+                <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/5 transition"></div>
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <FiCamera className="text-6xl text-cyan-400/40 group-hover:text-cyan-400 transition" />
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950 to-transparent">
+                  <span className="text-xs font-bold tracking-[0.25em] text-cyan-400">
+                    IMG-00{index + 1}
+                  </span>
+                  <h3 className="text-lg font-bold mt-2">{item}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Showcase */}
+      <section className="py-24 px-6 bg-slate-900">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+          <div className="relative">
+            <div className="absolute -inset-4 bg-cyan-500/20 blur-3xl rounded-full"></div>
+
+            <div className="relative min-h-[420px] rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-950 to-cyan-950 flex items-center justify-center overflow-hidden">
+              <FiRadio className="text-[140px] text-cyan-400/30" />
+
+              <div className="absolute bottom-8 left-8 right-8">
+                <p className="text-cyan-400 uppercase tracking-[0.3em] text-xs mb-3">
+                  Featured Work
+                </p>
+                <h3 className="text-3xl font-black">
+                  Telecom Site Deployment
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
+              Project Highlight
+            </p>
+
+            <h2 className="text-3xl md:text-5xl font-black mb-6">
+              Professional Field Execution And Quality Support
+            </h2>
+
+            <p className="text-slate-300 text-lg leading-relaxed mb-8">
+              Our gallery represents field operations such as telecom tower
+              work, fiber deployment, site inspection, network testing,
+              maintenance activities, and project coordination.
+            </p>
+
+            <div className="space-y-5">
+              {[
+                "Site survey and planning documentation",
+                "Telecom tower and network deployment support",
+                "Fiber laying, splicing, and testing work",
+                "Maintenance, safety, and quality inspection",
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                    <FiArrowRight />
+                  </div>
+                  <p className="text-slate-200">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-20 px-6 bg-slate-950">
+        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center"
+            >
+              <h3 className="text-4xl md:text-5xl font-black text-cyan-400 mb-3">
+                {stat.value}
+              </h3>
+              <p className="text-slate-300 font-semibold">{stat.label}</p>
             </div>
           ))}
         </div>
+      </section>
 
-      </div>
-    </div>
+      {/* CTA */}
+      <section className="py-24 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-black mb-6">
+            Want To See More Projects?
+          </h2>
+
+          <p className="text-lg md:text-xl mb-10 font-medium">
+            Contact our team to learn more about our telecom and infrastructure
+            project capabilities.
+          </p>
+
+          <a
+            href="/contact"
+            className="bg-slate-950 text-white px-8 py-4 rounded-full font-bold inline-flex items-center gap-3 hover:bg-slate-900 transition"
+          >
+            Contact Our Team
+            <FiArrowRight />
+          </a>
+        </div>
+      </section>
+    </main>
   );
 };
 
