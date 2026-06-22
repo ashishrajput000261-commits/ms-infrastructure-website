@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   FiArrowRight,
   FiCheckCircle,
@@ -46,10 +47,50 @@ const services = [
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    service: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    try {
+      setLoading(true);
+
+      await axios.post("http://localhost:8080/api/contact", formData);
+
+      setSubmitted(true);
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit inquiry. Please check backend server.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -144,9 +185,16 @@ const Contact = () => {
                 <h3 className="text-3xl font-black mb-4">
                   Inquiry Submitted
                 </h3>
-                <p className="text-slate-400">
-                  Thank you. Our team will contact you soon.
+                <p className="text-slate-400 mb-8">
+                  Thank you. Your inquiry has been saved successfully.
                 </p>
+
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="bg-cyan-400 text-slate-950 px-6 py-3 rounded-full font-bold hover:bg-cyan-300 transition"
+                >
+                  Submit Another Inquiry
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -158,6 +206,9 @@ const Contact = () => {
                     <input
                       required
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400"
                       placeholder="Your name"
                     />
@@ -170,6 +221,9 @@ const Contact = () => {
                     <input
                       required
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400"
                       placeholder="your@email.com"
                     />
@@ -184,6 +238,9 @@ const Contact = () => {
                     <input
                       required
                       type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400"
                       placeholder="+91 XXXXX XXXXX"
                     />
@@ -195,6 +252,9 @@ const Contact = () => {
                     </label>
                     <input
                       type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400"
                       placeholder="Company / Organization"
                     />
@@ -207,6 +267,9 @@ const Contact = () => {
                   </label>
                   <select
                     required
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400"
                   >
                     <option value="">Select service</option>
@@ -225,6 +288,9 @@ const Contact = () => {
                   <textarea
                     required
                     rows={5}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-400 resize-none"
                     placeholder="Tell us about your requirement..."
                   ></textarea>
@@ -232,9 +298,10 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-cyan-400 text-slate-950 px-8 py-4 rounded-xl font-black inline-flex items-center justify-center gap-3 hover:bg-cyan-300 transition"
+                  disabled={loading}
+                  className="w-full bg-cyan-400 disabled:bg-slate-600 disabled:text-slate-300 text-slate-950 px-8 py-4 rounded-xl font-black inline-flex items-center justify-center gap-3 hover:bg-cyan-300 transition"
                 >
-                  Submit Inquiry
+                  {loading ? "Submitting..." : "Submit Inquiry"}
                   <FiSend />
                 </button>
               </form>
