@@ -7,6 +7,7 @@ import {
   FiUsers,
   FiX,
   FiEye,
+  FiTrash2,
 } from "react-icons/fi";
 
 const AdminContacts = () => {
@@ -25,8 +26,25 @@ const AdminContacts = () => {
       setContacts(response.data);
     } catch (error) {
       console.error(error);
+      alert("Failed to fetch contact inquiries");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteContact = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this inquiry?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:8080/api/contact/${id}`);
+      fetchContacts();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete inquiry");
     }
   };
 
@@ -44,7 +62,6 @@ const AdminContacts = () => {
   return (
     <main className="min-h-screen bg-slate-950 text-white pt-32 px-6 pb-20">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-10">
           <p className="text-cyan-400 uppercase tracking-[0.35em] text-sm mb-4">
             Admin Dashboard
@@ -60,7 +77,6 @@ const AdminContacts = () => {
           </p>
         </div>
 
-        {/* Stats + Search */}
         <div className="grid lg:grid-cols-3 gap-6 mb-10">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6">
             <div className="flex items-center gap-4">
@@ -95,7 +111,6 @@ const AdminContacts = () => {
           </div>
         </div>
 
-        {/* Table */}
         {loading ? (
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10">
             <p className="text-slate-300">Loading inquiries...</p>
@@ -106,7 +121,7 @@ const AdminContacts = () => {
           </div>
         ) : (
           <div className="overflow-x-auto bg-slate-900 border border-slate-800 rounded-3xl">
-            <table className="w-full min-w-[900px]">
+            <table className="w-full min-w-[1000px]">
               <thead className="bg-slate-950">
                 <tr>
                   <th className="p-5 text-left text-sm text-slate-400 uppercase tracking-widest">
@@ -163,13 +178,23 @@ const AdminContacts = () => {
                     </td>
 
                     <td className="p-5">
-                      <button
-                        onClick={() => setSelectedContact(contact)}
-                        className="bg-cyan-400 text-slate-950 px-4 py-2 rounded-full font-bold inline-flex items-center gap-2 hover:bg-cyan-300 transition"
-                      >
-                        <FiEye />
-                        View
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setSelectedContact(contact)}
+                          className="bg-cyan-400 text-slate-950 px-4 py-2 rounded-full font-bold inline-flex items-center gap-2 hover:bg-cyan-300 transition"
+                        >
+                          <FiEye />
+                          View
+                        </button>
+
+                        <button
+                          onClick={() => deleteContact(contact.id)}
+                          className="bg-red-500 text-white px-4 py-2 rounded-full font-bold inline-flex items-center gap-2 hover:bg-red-600 transition"
+                        >
+                          <FiTrash2 />
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -178,7 +203,6 @@ const AdminContacts = () => {
           </div>
         )}
 
-        {/* Modal */}
         {selectedContact && (
           <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center px-6">
             <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-8 relative">
