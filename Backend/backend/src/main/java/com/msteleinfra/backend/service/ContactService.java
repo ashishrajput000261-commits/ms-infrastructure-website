@@ -22,4 +22,8 @@ public class ContactService {
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
+
+    public void deleteContact(Long id) {
+        contactRepository.deleteById(id);
+    }
 }
