@@ -10,6 +10,9 @@ import {
   FiUsers,
 } from "react-icons/fi";
 
+import { getGallery } from "../api/galleryApi.js";
+import useFetch from "../hooks/useFetch.js";
+
 const categories = [
   { icon: <FiRadio />, title: "Telecom Towers" },
   { icon: <FiWifi />, title: "Fiber Networks" },
@@ -17,21 +20,6 @@ const categories = [
   { icon: <FiTool />, title: "Network Maintenance" },
   { icon: <FiServer />, title: "Smart Infrastructure" },
   { icon: <FiUsers />, title: "Team Operations" },
-];
-
-const galleryItems = [
-  "Tower Installation Work",
-  "Fiber Route Survey",
-  "OFC Laying Activity",
-  "Network Testing Setup",
-  "Telecom Site Inspection",
-  "Field Team Operations",
-  "Smart Infrastructure Setup",
-  "Power Backup Installation",
-  "Fiber Splicing Work",
-  "Maintenance Visit",
-  "Site Safety Check",
-  "Project Coordination",
 ];
 
 const stats = [
@@ -42,9 +30,26 @@ const stats = [
 ];
 
 const Gallery = () => {
+  const { data: galleryItems, loading, error } = useFetch(getGallery);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white text-2xl font-bold">
+        Loading Gallery...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-500 text-2xl font-bold">
+        Failed to load gallery.
+      </div>
+    );
+  }
+
   return (
     <main className="bg-slate-950 text-white">
-      {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-6 pt-24">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950"></div>
         <div className="absolute top-24 left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
@@ -67,7 +72,6 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Categories */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -96,7 +100,6 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Gallery Grid */}
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
@@ -109,30 +112,46 @@ const Gallery = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryItems.map((item, index) => (
-              <div
-                key={index}
-                className="group relative aspect-video overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 to-cyan-950 hover:border-cyan-400/60 transition"
-              >
-                <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/5 transition"></div>
+            {galleryItems.length === 0 ? (
+              <p className="text-slate-300 col-span-full text-center">
+                No gallery items available.
+              </p>
+            ) : (
+              galleryItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="group relative aspect-video overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 to-cyan-950 hover:border-cyan-400/60 transition"
+                >
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 transition"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <FiCamera className="text-6xl text-cyan-400/40 group-hover:text-cyan-400 transition" />
+                    </div>
+                  )}
 
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <FiCamera className="text-6xl text-cyan-400/40 group-hover:text-cyan-400 transition" />
-                </div>
+                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/5 transition"></div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950 to-transparent">
-                  <span className="text-xs font-bold tracking-[0.25em] text-cyan-400">
-                    IMG-00{index + 1}
-                  </span>
-                  <h3 className="text-lg font-bold mt-2">{item}</h3>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950 to-transparent">
+                    <span className="text-xs font-bold tracking-[0.25em] text-cyan-400">
+                      {item.category || `IMG-00${index + 1}`}
+                    </span>
+                    <h3 className="text-lg font-bold mt-2">{item.title}</h3>
+                    <p className="text-sm text-slate-300 mt-2 line-clamp-2">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* Featured Showcase */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
           <div className="relative">
@@ -173,12 +192,12 @@ const Gallery = () => {
                 "Telecom tower and network deployment support",
                 "Fiber laying, splicing, and testing work",
                 "Maintenance, safety, and quality inspection",
-              ].map((item, index) => (
+              ].map((point, index) => (
                 <div key={index} className="flex items-center gap-4">
                   <div className="h-10 w-10 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
                     <FiArrowRight />
                   </div>
-                  <p className="text-slate-200">{item}</p>
+                  <p className="text-slate-200">{point}</p>
                 </div>
               ))}
             </div>
@@ -186,7 +205,6 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Stats */}
       <section className="py-20 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
@@ -203,7 +221,6 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-24 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-black mb-6">

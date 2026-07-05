@@ -1,53 +1,14 @@
 import {
-  FiRadio,
-  FiWifi,
   FiServer,
-  FiCpu,
-  FiShield,
-  FiActivity,
   FiCheckCircle,
   FiArrowRight,
 } from "react-icons/fi";
 
+import { getServices } from "../api/serviceApi.js";
+import useFetch from "../hooks/useFetch.js";
+
 const Services = () => {
-  const services = [
-    {
-      icon: <FiRadio />,
-      title: "Telecom Network Deployment",
-      desc: "End-to-end telecom site deployment including tower installation, site survey, and network rollout support.",
-      points: ["Tower Installation", "Site Acquisition", "RF Survey"],
-    },
-    {
-      icon: <FiWifi />,
-      title: "Fiber Optic Infrastructure",
-      desc: "Reliable OFC laying, splicing, testing, and maintenance for high-speed connectivity.",
-      points: ["OFC Laying", "Fiber Splicing", "OTDR Testing"],
-    },
-    {
-      icon: <FiServer />,
-      title: "Network Maintenance",
-      desc: "Preventive and corrective maintenance services to keep telecom networks running smoothly.",
-      points: ["Preventive Maintenance", "Emergency Support", "Site Inspection"],
-    },
-    {
-      icon: <FiActivity />,
-      title: "Managed Services",
-      desc: "Complete field operation and monitoring support for telecom and enterprise infrastructure.",
-      points: ["Network Monitoring", "Field Operations", "SLA Support"],
-    },
-    {
-      icon: <FiShield />,
-      title: "Power Solutions",
-      desc: "Power backup and electrical infrastructure support for telecom sites and data systems.",
-      points: ["DG Installation", "Battery Backup", "Power Audit"],
-    },
-    {
-      icon: <FiCpu />,
-      title: "Smart Infrastructure",
-      desc: "Modern infrastructure solutions for smart city, IoT, and enterprise network requirements.",
-      points: ["IoT Solutions", "Smart City Networks", "Enterprise Infra"],
-    },
-  ];
+  const { data: services, loading, error } = useFetch(getServices);
 
   const process = [
     "Planning & Survey",
@@ -65,9 +26,24 @@ const Services = () => {
     "Utilities",
   ];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white text-2xl font-bold">
+        Loading Services...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-500 text-2xl font-bold">
+        Failed to load services.
+      </div>
+    );
+  }
+
   return (
     <main className="bg-slate-950 text-white">
-      {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950"></div>
         <div className="absolute top-20 left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
@@ -86,14 +62,13 @@ const Services = () => {
           </h1>
 
           <p className="max-w-3xl mx-auto text-slate-300 text-lg leading-relaxed">
-            MS Telecom & Infrastructure provides professional telecom,
-            fiber, network maintenance, power, and smart infrastructure
-            solutions for modern connectivity needs.
+            MS Telecom & Infrastructure provides professional telecom, fiber,
+            network maintenance, power, and smart infrastructure solutions for
+            modern connectivity needs.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -106,39 +81,39 @@ const Services = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="group bg-slate-950 border border-slate-800 rounded-3xl p-8 hover:border-cyan-400/60 transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mb-6 group-hover:bg-cyan-400 group-hover:text-slate-950 transition">
-                  {service.icon}
+            {services.length === 0 ? (
+              <p className="text-slate-300 text-center col-span-full">
+                No services available.
+              </p>
+            ) : (
+              services.map((service) => (
+                <div
+                  key={service.id}
+                  className="group bg-slate-950 border border-slate-800 rounded-3xl p-8 hover:border-cyan-400/60 transition-all duration-300 hover:-translate-y-2"
+                >
+                  <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mb-6 group-hover:bg-cyan-400 group-hover:text-slate-950 transition">
+                    <FiServer />
+                  </div>
+
+                  <h3 className="text-2xl font-bold mb-4">
+                    {service.title || service.name}
+                  </h3>
+
+                  <p className="text-slate-400 leading-relaxed mb-6">
+                    {service.description || service.desc}
+                  </p>
+
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <FiCheckCircle className="text-cyan-400" />
+                    <span>Professional Service</span>
+                  </div>
                 </div>
-
-                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-
-                <p className="text-slate-400 leading-relaxed mb-6">
-                  {service.desc}
-                </p>
-
-                <ul className="space-y-3">
-                  {service.points.map((point, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-3 text-slate-300"
-                    >
-                      <FiCheckCircle className="text-cyan-400" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -170,7 +145,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
       <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
           <div>
@@ -234,7 +208,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Industries */}
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -260,7 +233,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-24 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-black mb-6">

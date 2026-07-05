@@ -1,3 +1,5 @@
+import { getProjects } from "../api/projectApi";
+import useFetch from "../hooks/useFetch";
 import React from "react";
 import {
   FiArrowRight,
@@ -71,6 +73,7 @@ const industries = [
 ];
 
 const Projects = () => {
+  const { data: projects, loading, error } = useFetch(getProjects);
   return (
     <main className="bg-slate-950 text-white">
       {/* Hero */}

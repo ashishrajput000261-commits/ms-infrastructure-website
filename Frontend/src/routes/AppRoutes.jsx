@@ -13,6 +13,7 @@ import Blog from "../pages/Blog";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import AdminContacts from "../pages/AdminContacts";
+import AdminApplications from "../pages/AdminApplications";
 
 const AppRoutes = () => {
   return (
@@ -28,7 +29,12 @@ const AppRoutes = () => {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+
           <Route path="/admin/contacts" element={<AdminContacts />} />
+          <Route
+            path="/admin/applications"
+            element={<AdminApplications />}
+          />
         </Route>
 
         <Route path="/login" element={<Login />} />

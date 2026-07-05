@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ApplyModal from "../components/ApplyModal";
 import {
   FiArrowRight,
   FiBriefcase,
@@ -78,6 +79,18 @@ const benefits = [
 const hiringSteps = ["Apply", "Screening", "Interview", "Selection"];
 
 const Careers = () => {
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+const [selectedJob, setSelectedJob] = useState("");
+
+const openApplicationModal = (jobTitle) => {
+  setSelectedJob(jobTitle);
+  setIsApplyModalOpen(true);
+};
+
+const closeApplicationModal = () => {
+  setIsApplyModalOpen(false);
+  setSelectedJob("");
+};
   return (
     <main className="bg-white text-slate-900">
       {/* Hero */}
@@ -186,13 +199,14 @@ const Careers = () => {
                     </div>
                   </div>
 
-                  <a
-                    href="/contact"
-                    className="bg-cyan-600 text-white px-6 py-3 rounded-full font-bold inline-flex items-center justify-center gap-3 hover:bg-cyan-700 transition shrink-0"
-                  >
-                    Apply Now
-                    <FiArrowRight />
-                  </a>
+                  <button
+                   type="button"
+                    onClick={() => openApplicationModal(job.title)}
+                   className="bg-cyan-600 text-white px-6 py-3 rounded-full font-bold inline-flex items-center justify-center gap-3 hover:bg-cyan-700 transition shrink-0"
+                   >
+                     Apply Now
+                     <FiArrowRight />
+                    </button>
                 </div>
               </div>
             ))}
@@ -300,15 +314,21 @@ const Careers = () => {
             projects.
           </p>
 
-          <a
-            href="/contact"
-            className="bg-white text-cyan-700 px-8 py-4 rounded-full font-bold inline-flex items-center gap-3 hover:bg-slate-100 hover:shadow-lg transition-all"
-          >
-            Apply Now
-            <FiArrowRight />
-          </a>
+       <button
+              type="button"
+               onClick={() => openApplicationModal("General Application")}
+               className="bg-white text-cyan-700 px-8 py-4 rounded-full font-bold inline-flex items-center gap-3 hover:bg-slate-100 hover:shadow-lg transition-all"
+              >
+              Apply Now
+              <FiArrowRight />
+            </button>
         </div>
       </section>
+      <ApplyModal
+  isOpen={isApplyModalOpen}
+  onClose={closeApplicationModal}
+  jobTitle={selectedJob}
+/>
     </main>
   );
 };
