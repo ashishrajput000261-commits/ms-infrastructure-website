@@ -1,0 +1,5 @@
+.idea/
+node_modules/
+Backend/backend/target/
+Backend/backend/uploads/
+.env
