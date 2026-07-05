@@ -14,6 +14,15 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import AdminContacts from "../pages/AdminContacts";
 import AdminApplications from "../pages/AdminApplications";
+import AdminLogin from "../pages/admin/AdminLogin";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminCareers from "../pages/admin/AdminCareers";
+import AdminGallery from "../pages/admin/AdminGallery";
+import AdminTestimonials from "../pages/admin/AdminTestimonials";
+import AdminEnquiries from "../pages/admin/AdminEnquiries";
+import ProtectedRoute from "../components/admin/ProtectedRoute";
+
+
 
 const AppRoutes = () => {
   return (
@@ -29,6 +38,53 @@ const AppRoutes = () => {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+  path="/admin/dashboard"
+  element={
+    <ProtectedRoute>
+      <AdminDashboard />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/careers"
+  element={
+    <ProtectedRoute>
+      <AdminCareers />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/gallery"
+  element={
+    <ProtectedRoute>
+      <AdminGallery />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/testimonials"
+  element={
+    <ProtectedRoute>
+      <AdminTestimonials />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/enquiries"
+  element={
+    <ProtectedRoute>
+      <AdminEnquiries />
+    </ProtectedRoute>
+  }
+/>
+          
+          
 
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route
