@@ -1,167 +1,376 @@
-import { FiArrowRight, FiRadio, FiWifi, FiServer } from "react-icons/fi";
+import { useEffect } from "react";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "MS Telecom & Infrastructure";
+  }, []);
+
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative min-h-screen py-32 bg-slate-950 text-white flex items-center justify-center overflow-hidden">
-        <div className="absolute h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl"></div>
+      <style>{`
+        :root {
+          --primary-color: #004b87;
+          --secondary-color: #f4f7f6;
+          --accent-color: #00a8e8;
+          --text-color: #333333;
+        }
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <p className="text-cyan-400 uppercase tracking-[0.4em] text-sm mb-4">
-            MS Telecom & Infrastructure
+        * {
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          color: var(--text-color);
+          line-height: 1.6;
+          background-color: #ffffff;
+        }
+
+        .home-page {
+          width: 100%;
+          min-height: 100vh;
+        }
+
+        .home-page h1,
+        .home-page h2,
+        .home-page h3,
+        .home-page p {
+          margin-top: 0;
+        }
+
+        /* Header */
+
+        .home-header {
+          background-color: var(--primary-color);
+          color: #ffffff;
+          padding: 32px 20px;
+          text-align: center;
+        }
+
+        .home-header h1 {
+          margin-bottom: 8px;
+          font-size: 40px;
+          letter-spacing: 1px;
+        }
+
+        .home-header p {
+          margin-bottom: 0;
+          font-size: 18px;
+        }
+
+        /* Navbar */
+
+        .home-navbar {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #222222;
+        }
+
+        .home-navbar a {
+          display: block;
+          padding: 16px 30px;
+          color: #ffffff;
+          text-decoration: none;
+          text-transform: uppercase;
+          font-size: 14px;
+          font-weight: 700;
+          transition: background-color 0.3s ease;
+        }
+
+        .home-navbar a:hover {
+          background-color: var(--accent-color);
+        }
+
+        /* Hero Section */
+
+        .home-hero {
+          min-height: 60vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 50px 20px;
+          color: #ffffff;
+          text-align: center;
+
+          background-image:
+            linear-gradient(
+              rgba(0, 30, 60, 0.72),
+              rgba(0, 30, 60, 0.72)
+            ),
+            url("https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=1920");
+
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+        }
+
+        .home-hero h2 {
+          margin-bottom: 16px;
+          font-size: clamp(38px, 6vw, 58px);
+          line-height: 1.2;
+        }
+
+        .home-hero p {
+          max-width: 700px;
+          margin: 0 auto;
+          font-size: 20px;
+        }
+
+        /* Common Container */
+
+        .home-container {
+          width: 85%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 70px 0;
+        }
+
+        .home-section-title {
+          margin-bottom: 35px;
+          color: var(--primary-color);
+          text-align: center;
+          font-size: 34px;
+        }
+
+        /* About Section */
+
+        .home-about-text {
+          max-width: 900px;
+          margin: 0 auto;
+          text-align: center;
+          font-size: 18px;
+        }
+
+        /* Services */
+
+        .home-services {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: stretch;
+          gap: 30px;
+        }
+
+        .home-service-box {
+          flex: 1 1 280px;
+          max-width: 360px;
+          padding: 32px;
+          background-color: var(--secondary-color);
+          border-bottom: 4px solid var(--accent-color);
+          border-radius: 10px;
+          text-align: center;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        }
+
+        .home-service-box:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 28px rgba(0, 75, 135, 0.18);
+        }
+
+        .home-service-box h3 {
+          margin-bottom: 15px;
+          color: var(--primary-color);
+          font-size: 23px;
+        }
+
+        .home-service-box p {
+          margin-bottom: 0;
+        }
+
+        /* Footer */
+
+        .home-footer {
+          margin-top: 30px;
+          padding: 25px 20px;
+          background-color: #222222;
+          color: #cccccc;
+          text-align: center;
+        }
+
+        .home-footer p {
+          margin: 5px 0;
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 768px) {
+          .home-header h1 {
+            font-size: 31px;
+          }
+
+          .home-navbar {
+            position: static;
+            flex-direction: column;
+          }
+
+          .home-navbar a {
+            width: 100%;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+          }
+
+          .home-hero {
+            min-height: 65vh;
+          }
+
+          .home-hero p {
+            font-size: 17px;
+          }
+
+          .home-container {
+            width: 90%;
+            padding: 50px 0;
+          }
+
+          .home-section-title {
+            font-size: 29px;
+          }
+
+          .home-services {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .home-service-box {
+            width: 100%;
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .home-header {
+            padding: 25px 15px;
+          }
+
+          .home-header h1 {
+            font-size: 26px;
+          }
+
+          .home-header p {
+            font-size: 16px;
+          }
+
+          .home-hero h2 {
+            font-size: 35px;
+          }
+
+          .home-hero p {
+            font-size: 16px;
+          }
+
+          .home-section-title {
+            font-size: 26px;
+          }
+
+          .home-service-box {
+            padding: 25px 20px;
+          }
+        }
+      `}</style>
+
+      <main className="home-page">
+        {/* Header */}
+        <header className="home-header">
+          <h1>MS Telecom &amp; Infrastructure</h1>
+          <p>Connecting the Future, Today.</p>
+        </header>
+
+        {/* Navigation */}
+        <nav className="home-navbar">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#infrastructure">Infrastructure</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        {/* Hero Section */}
+        <section className="home-hero">
+          <h2>Next-Generation Connectivity</h2>
+
+          <p>
+            Building the backbone of modern communication with cutting-edge
+            telecom infrastructure and cloud integration.
+          </p>
+        </section>
+
+        {/* About Section */}
+        <section className="home-container" id="about">
+          <h2 className="home-section-title">Who We Are</h2>
+
+          <p className="home-about-text">
+            At MS Telecom &amp; Infrastructure, we specialize in deploying,
+            scaling, and managing robust telecommunication networks. From
+            global fiber-optic rollouts to laying the groundwork for 5G and
+            cloud computing, our mission is to deliver seamless, high-speed,
+            and reliable connectivity solutions to businesses and communities
+            worldwide.
+          </p>
+        </section>
+
+        {/* Services Section */}
+        <section className="home-container" id="services">
+          <h2 className="home-section-title">Our Core Infrastructure</h2>
+
+          <div className="home-services" id="infrastructure">
+            <article className="home-service-box">
+              <h3>5G &amp; Wireless Networks</h3>
+
+              <p>
+                End-to-end deployment of cell towers, small cells, and advanced
+                wireless broadband solutions to power the next generation of
+                mobile connectivity.
+              </p>
+            </article>
+
+            <article className="home-service-box">
+              <h3>Fiber Optic Expansion</h3>
+
+              <p>
+                Designing, laying, and maintaining high-capacity fiber-optic
+                cables to ensure blazing-fast internet and secure enterprise
+                data transmission.
+              </p>
+            </article>
+
+            <article className="home-service-box">
+              <h3>Cloud Network Integration</h3>
+
+              <p>
+                Modernizing telecom infrastructure with scalable cloud
+                solutions to support edge computing, data centers, and
+                virtualized network functions.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="home-footer" id="contact">
+          <p>
+            &copy; {new Date().getFullYear()} MS Telecom &amp; Infrastructure.
+            All Rights Reserved.
           </p>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6">
-            Building The Future Of
-            <span className="block text-cyan-400">
-              Telecom Infrastructure
-            </span>
-          </h1>
-
-          <p className="max-w-3xl mx-auto text-slate-300 text-lg mb-10">
-            Delivering telecom networks, fiber infrastructure, enterprise
-            connectivity, and next-generation digital transformation solutions
-            across India.
+          <p>
+            123 Connectivity Way, Tech District | info@mstelecom-infra.com
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button className="bg-cyan-500 hover:bg-cyan-400 px-8 py-4 rounded-xl font-bold text-slate-950 transition">
-              Explore Services
-            </button>
-
-            <button className="border border-cyan-500 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-cyan-500/10 transition">
-              Contact Us <FiArrowRight />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-            {[
-              ["150+", "Projects Delivered"],
-              ["50+", "Enterprise Clients"],
-              ["24/7", "Network Monitoring"],
-              ["99.9%", "Uptime SLA"],
-            ].map(([num, label]) => (
-              <div
-                key={label}
-                className="bg-slate-900/70 border border-cyan-500/20 rounded-xl p-5 text-center"
-              >
-                <h3 className="text-3xl font-black text-cyan-400">{num}</h3>
-                <p className="text-slate-300 text-sm">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="bg-slate-900 py-24 px-6 text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-cyan-400 uppercase tracking-widest mb-3">
-              Our Services
-            </p>
-
-            <h2 className="text-4xl md:text-5xl font-black">
-              Telecom & Infrastructure Solutions
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-slate-950 border border-cyan-500/20 p-8 rounded-2xl hover:border-cyan-400 transition">
-              <FiWifi className="text-4xl text-cyan-400 mb-5" />
-              <h3 className="text-2xl font-bold mb-4">Fiber Network</h3>
-              <p className="text-slate-400">
-                End-to-end fiber deployment, maintenance and enterprise
-                connectivity solutions.
-              </p>
-            </div>
-
-            <div className="bg-slate-950 border border-cyan-500/20 p-8 rounded-2xl hover:border-cyan-400 transition">
-              <FiRadio className="text-4xl text-cyan-400 mb-5" />
-              <h3 className="text-2xl font-bold mb-4">Telecom Towers</h3>
-              <p className="text-slate-400">
-                Tower installation, optimization and telecom infrastructure
-                development.
-              </p>
-            </div>
-
-            <div className="bg-slate-950 border border-cyan-500/20 p-8 rounded-2xl hover:border-cyan-400 transition">
-              <FiServer className="text-4xl text-cyan-400 mb-5" />
-              <h3 className="text-2xl font-bold mb-4">Network Operations</h3>
-              <p className="text-slate-400">
-                24/7 monitoring, support and enterprise-grade network
-                management.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Preview Section */}
-      <section className="bg-slate-950 px-6 py-24 text-white">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-16 text-center">
-            <p className="mb-3 uppercase tracking-widest text-cyan-400">
-              Featured Projects
-            </p>
-
-            <h2 className="text-4xl font-black md:text-5xl">
-              Recent Infrastructure Deployments
-            </h2>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              {
-                title: "National Fiber Rollout",
-                desc: "Large-scale fiber deployment connecting enterprise hubs with high-speed reliable infrastructure.",
-              },
-              {
-                title: "Smart Tower Network",
-                desc: "Modern telecom tower infrastructure deployment designed for scalable 5G-ready connectivity.",
-              },
-              {
-                title: "Enterprise Connectivity",
-                desc: "Secure and high-availability network solutions for businesses, campuses and industrial clients.",
-              },
-            ].map((project) => (
-              <div
-                key={project.title}
-                className="rounded-2xl border border-cyan-500/20 bg-slate-900 p-8 transition hover:-translate-y-2 hover:border-cyan-400"
-              >
-                <div className="mb-6 h-40 rounded-xl bg-gradient-to-br from-cyan-500/20 to-slate-950"></div>
-
-                <h3 className="mb-4 text-2xl font-bold text-white">
-                  {project.title}
-                </h3>
-
-                <p className="mb-6 text-slate-400">{project.desc}</p>
-
-                <button className="flex items-center gap-2 font-bold text-cyan-400">
-                  View Project <FiArrowRight />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-cyan-500 px-6 py-20 text-center text-slate-950">
-        <h2 className="mb-4 text-4xl font-black">
-          Ready To Build Future Infrastructure?
-        </h2>
-
-        <p className="mx-auto mb-8 max-w-2xl text-lg font-semibold">
-          Let’s discuss your telecom, fiber and infrastructure project
-          requirements.
-        </p>
-
-        <button className="rounded-xl bg-slate-950 px-8 py-4 font-bold text-white transition hover:bg-slate-800">
-          Contact Us
-        </button>
-      </section>
+        </footer>
+      </main>
     </>
   );
 };

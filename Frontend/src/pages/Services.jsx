@@ -1,257 +1,177 @@
-import {
-  FiServer,
-  FiCheckCircle,
-  FiArrowRight,
-} from "react-icons/fi";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FiWifi, FiActivity, FiTool, FiCpu, FiArrowRight, FiCheckCircle } from "react-icons/fi";
 
-import { getServices } from "../api/serviceApi.js";
-import useFetch from "../hooks/useFetch.js";
+const services = [
+  {
+    id: "telecom-towers",
+    title: "Telecom Tower Infrastructure",
+    icon: FiWifi,
+    description:
+      "End-to-end solutions for telecommunication towers including site surveying, civil foundation works, tower erection and auditing.",
+    features: [
+      "Site acquisition & feasibility surveys",
+      "Greenfield and rooftop tower erection",
+      "Civil foundation & electrical grounding",
+      "Structural reinforcement & auditing",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "fiber-optics",
+    title: "Fiber Optic Networks",
+    icon: FiActivity,
+    description:
+      "Underground and aerial Optical Fiber Cable installation for reliable high-speed connectivity.",
+    features: [
+      "Underground & aerial cable laying",
+      "Splicing, jointing & testing",
+      "Right of Way coordination",
+      "Fiber network upgrades & expansion",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "operations-maintenance",
+    title: "Operations & Maintenance",
+    icon: FiTool,
+    description:
+      "Preventive and corrective maintenance services for telecom infrastructure to improve uptime.",
+    features: [
+      "Emergency fault rectification",
+      "Routine preventive site maintenance",
+      "Power backup & battery inspection",
+      "Alarm monitoring & resolution",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "enterprise-networking",
+    title: "Enterprise Networking Solutions",
+    icon: FiCpu,
+    description:
+      "Custom networking solutions for offices, commercial facilities and industrial environments.",
+    features: [
+      "In-Building Solutions for coverage",
+      "LAN architecture",
+      "Structured data cabling",
+      "Enterprise Wi-Fi & IoT deployments",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+  },
+];
 
-const Services = () => {
-  const { data: services, loading, error } = useFetch(getServices);
+const processSteps = [
+  { step: "01", title: "Site Survey & Planning", description: "We study requirements, conduct feasibility checks and prepare execution plan." },
+  { step: "02", title: "Execution & Installation", description: "Our teams execute work using suitable materials and safety procedures." },
+  { step: "03", title: "Testing & Handover", description: "Completed work is inspected, tested and documented before handover." },
+];
 
-  const process = [
-    "Planning & Survey",
-    "Deployment",
-    "Testing & Quality Check",
-    "Support & Maintenance",
-  ];
-
-  const industries = [
-    "Telecom",
-    "Government",
-    "Enterprise",
-    "Data Centers",
-    "Smart Cities",
-    "Utilities",
-  ];
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white text-2xl font-bold">
-        Loading Services...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-500 text-2xl font-bold">
-        Failed to load services.
-      </div>
-    );
-  }
+const ServicesPage = () => {
+  useEffect(() => {
+    document.title = "Services | MS Telecom & Infrastructure";
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <main className="bg-slate-950 text-white">
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-6">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950"></div>
-        <div className="absolute top-20 left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"></div>
-
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <p className="text-cyan-400 uppercase tracking-[0.35em] text-sm mb-5">
-            Our Services
-          </p>
-
-          <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
-            Building Reliable
-            <span className="block text-cyan-400">
-              Telecom Infrastructure
-            </span>
-          </h1>
-
-          <p className="max-w-3xl mx-auto text-slate-300 text-lg leading-relaxed">
-            MS Telecom & Infrastructure provides professional telecom, fiber,
-            network maintenance, power, and smart infrastructure solutions for
-            modern connectivity needs.
-          </p>
-        </div>
+    <main className="bg-white text-slate-900 font-sans">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-900 to-blue-600 text-white py-24 px-6 text-center">
+        <h1 className="text-5xl font-extrabold mb-6">Our Premium Services</h1>
+        <p className="max-w-2xl mx-auto text-lg text-blue-100">
+          Delivering telecom infrastructure, fiber connectivity, maintenance and enterprise networking solutions.
+        </p>
+        <Link
+          to="/contact"
+          className="mt-10 inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-6 py-3 rounded-lg shadow hover:bg-blue-100"
+        >
+          Discuss Your Project <FiArrowRight />
+        </Link>
       </section>
 
-      <section className="py-24 px-6 bg-slate-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
-              What We Offer
-            </p>
-            <h2 className="text-3xl md:text-5xl font-black">
-              Complete Telecom Services
-            </h2>
-          </div>
+      {/* Services Section */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        {services.map((service, index) => {
+          const Icon = service.icon;
+          const imageOnLeft = index % 2 === 0;
+          return (
+            <article
+              key={service.id}
+              className={`flex flex-col gap-12 mb-20 lg:items-center ${imageOnLeft ? "lg:flex-row" : "lg:flex-row-reverse"}`}
+            >
+              {/* Image */}
+              <div className="w-full lg:w-1/2">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="rounded-2xl shadow-lg hover:scale-105 transition duration-500"
+                />
+              </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.length === 0 ? (
-              <p className="text-slate-300 text-center col-span-full">
-                No services available.
-              </p>
-            ) : (
-              services.map((service) => (
-                <div
-                  key={service.id}
-                  className="group bg-slate-950 border border-slate-800 rounded-3xl p-8 hover:border-cyan-400/60 transition-all duration-300 hover:-translate-y-2"
+              {/* Content */}
+              <div className="w-full lg:w-1/2">
+                <div className="flex items-center gap-3 mb-4 text-blue-600">
+                  <Icon className="text-3xl" />
+                  <span className="font-bold uppercase tracking-wide">Service {String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h2 className="text-3xl font-extrabold mb-4">{service.title}</h2>
+                <p className="text-slate-600 mb-6">{service.description}</p>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {service.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <FiCheckCircle className="text-blue-500" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to="/contact"
+                  className="mt-6 inline-flex items-center gap-2 text-blue-700 font-bold hover:text-blue-500"
                 >
-                  <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mb-6 group-hover:bg-cyan-400 group-hover:text-slate-950 transition">
-                    <FiServer />
-                  </div>
-
-                  <h3 className="text-2xl font-bold mb-4">
-                    {service.title || service.name}
-                  </h3>
-
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                    {service.description || service.desc}
-                  </p>
-
-                  <div className="flex items-center gap-3 text-slate-300">
-                    <FiCheckCircle className="text-cyan-400" />
-                    <span>Professional Service</span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 px-6 bg-slate-950">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
-              Our Process
-            </p>
-            <h2 className="text-3xl md:text-5xl font-black">
-              How We Deliver Projects
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6">
-            {process.map((item, index) => (
-              <div
-                key={index}
-                className="relative bg-slate-900 border border-slate-800 rounded-3xl p-8"
-              >
-                <span className="text-6xl font-black text-cyan-400/20">
-                  0{index + 1}
-                </span>
-                <h3 className="text-xl font-bold mt-6">{item}</h3>
-                <p className="text-slate-400 mt-3 leading-relaxed">
-                  We follow a structured and quality-focused approach to ensure
-                  reliable infrastructure delivery.
-                </p>
+                  Request Info <FiArrowRight />
+                </Link>
               </div>
-            ))}
-          </div>
-        </div>
+            </article>
+          );
+        })}
       </section>
 
-      <section className="py-24 px-6 bg-slate-900">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
-              Why Choose Us
-            </p>
-
-            <h2 className="text-3xl md:text-5xl font-black mb-6">
-              Trusted Partner For Telecom Infrastructure
-            </h2>
-
-            <p className="text-slate-300 text-lg leading-relaxed mb-8">
-              We focus on quality, safety, and timely execution. Our team works
-              with modern tools and industry practices to deliver strong and
-              scalable telecom infrastructure.
-            </p>
-
-            <div className="space-y-5">
-              {[
-                "Experienced telecom infrastructure team",
-                "Quality-focused project execution",
-                "Fast response and maintenance support",
-                "Professional field operation management",
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                    <FiCheckCircle />
-                  </div>
-                  <p className="text-slate-200">{item}</p>
-                </div>
-              ))}
+      {/* Process Section */}
+      <section className="bg-blue-50 py-20 px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold text-blue-900">How We Work</h2>
+          <p className="mt-4 text-slate-700">A structured process for reliable project delivery.</p>
+        </div>
+        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+          {processSteps.map((step) => (
+            <div key={step.step} className="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition">
+              <div className="text-blue-600 font-black text-2xl mb-4">{step.step}</div>
+              <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+              <p className="text-slate-600">{step.description}</p>
             </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute -inset-4 bg-cyan-500/20 blur-3xl rounded-full"></div>
-            <div className="relative bg-slate-950 border border-slate-800 rounded-3xl p-8">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                  <h3 className="text-4xl font-black text-cyan-400">50+</h3>
-                  <p className="text-slate-400 mt-2">Projects</p>
-                </div>
-
-                <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                  <h3 className="text-4xl font-black text-cyan-400">24/7</h3>
-                  <p className="text-slate-400 mt-2">Support</p>
-                </div>
-
-                <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                  <h3 className="text-4xl font-black text-cyan-400">100%</h3>
-                  <p className="text-slate-400 mt-2">Quality Focus</p>
-                </div>
-
-                <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                  <h3 className="text-4xl font-black text-cyan-400">5G</h3>
-                  <p className="text-slate-400 mt-2">Ready Infra</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-slate-950">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-3">
-              Industries We Serve
-            </p>
-            <h2 className="text-3xl md:text-5xl font-black">
-              Supporting Modern Connectivity
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((industry, index) => (
-              <div
-                key={index}
-                className="bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-cyan-400/60 transition"
-              >
-                <FiArrowRight className="text-cyan-400 text-2xl mb-5" />
-                <h3 className="text-2xl font-bold">{industry}</h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-black mb-6">
-            Need Telecom Infrastructure Services?
-          </h2>
-
-          <p className="text-lg md:text-xl mb-10 font-medium">
-            Contact our team for reliable telecom, fiber, and infrastructure
-            solutions.
-          </p>
-
-          <button className="bg-slate-950 text-white px-8 py-4 rounded-full font-bold inline-flex items-center gap-3 hover:bg-slate-900 transition">
-            Get Quote
-            <FiArrowRight />
-          </button>
-        </div>
+      {/* Final CTA */}
+      <section className="bg-blue-900 text-white py-20 px-6 text-center">
+        <h2 className="text-3xl font-extrabold mb-4">Ready to Strengthen Your Network?</h2>
+        <p className="max-w-2xl mx-auto text-blue-200 mb-8">
+          Connect with MS Telecom & Infrastructure to discuss your telecom, fiber, maintenance or enterprise requirements.
+        </p>
+        <Link
+          to="/contact"
+          className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-6 py-3 rounded-lg shadow hover:bg-blue-100"
+        >
+          Contact Our Team <FiArrowRight />
+        </Link>
       </section>
     </main>
   );
 };
 
-export default Services;
+export default ServicesPage;
